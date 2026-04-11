@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messenger of Light Photography</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --text: #1a1a1a;
+      --text-light: #6b6b6b;
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f7;
+      --border: #e5e5e5;
+      --accent: #1a1a1a;
+      --max-width: 1200px;
+      --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .nav-links { display: flex; gap: 2rem; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ===== Hero ===== */
+    .hero {
+      background: #0e1117;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .hero-logo {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero .brand-sub {
+      font-size: 1rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #e8943a;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: #9ca3af;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ===== Section Headers ===== */
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    /* ===== Portfolio Grid ===== */
+    .portfolio {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+      scroll-margin-top: 4rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      aspect-ratio: 3 / 4;
+      background: var(--bg-subtle);
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .grid-item:hover img { transform: scale(1.03); }
+
+    .grid-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .grid-item:hover .overlay { opacity: 1; }
+
+    .overlay-text {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== Placeholder image styling ===== */
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-subtle);
+      color: var(--text-light);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== Lightbox ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.92);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      background: none;
+      border: none;
+      font-family: var(--font);
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero { padding: 3rem 1.5rem; }
+      .hero-logo { width: 120px; height: 120px; }
+      .hero h1 { font-size: 1.8rem; }
+      .portfolio { padding: 1.5rem 1.5rem 4rem; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+      .nav-inner { padding: 1rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="IMG_7148.jpg" alt="Logo">Messenger of Light</a>
+      <div class="nav-links">
+        <a href="#sports">Sports</a>
+        <a href="#events">Events</a>
+        <a href="#portraits">Portraits</a>
+        <a href="galleries.html">Galleries</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <img src="IMG_7148.jpg" alt="Messenger of Light Photography logo" class="hero-logo">
+      <h1>Messenger of Light</h1>
+      <div class="brand-sub">Photography</div>
+      <p>Sports, event, and portrait photography — capturing the energy, the moments, and the people that matter.</p>
+    </div>
+  </section>
+
+  <!--
+    HOW TO ADD PHOTOS:
+    1. Export from Lightroom TWICE with the same filename:
+       - small/web-sized version  →  images/thumbs/<genre>/your-photo.jpg
+       - full/large version       →  images/full/<genre>/your-photo.jpg
+    2. Replace one of the placeholder <img> tags below with:
+         <img src="images/thumbs/<genre>/your-photo.jpg" alt="Description">
+    The lightbox automatically swaps "/thumbs/" → "/full/" when clicked.
+  -->
+
+  <!-- Sports Section -->
+  <section class="portfolio" id="sports">
+    <div class="section-header">
+      <h2>Sports</h2>
+      <p class="section-desc">The intensity, the motion, the split-second moments that define the game.</p>
+    </div>
+    <div class="grid">
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/4C8A1936.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A0147.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A0643.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A4805.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A4987.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A5969.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/CU7A6710.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/IMG_6003.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/IMG_7178.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/JM2A3112-2.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/JM2A3350.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/JM2A5483.jpg" alt="Sports photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/sports/JM2A7136.jpg" alt="Sports photo" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section class="portfolio" id="events">
+    <div class="section-header">
+      <h2>Events</h2>
+      <p class="section-desc">The celebrations, the gatherings, the stories unfolding in real time.</p>
+    </div>
+    <div class="grid">
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/events/CU7A9092.jpg" alt="Event photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/events/CU7A9254.jpg" alt="Event photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/events/IMG_0970.jpg" alt="Event photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/events/IMG_9187.jpg" alt="Event photo" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Portraits Section -->
+  <section class="portfolio" id="portraits">
+    <div class="section-header">
+      <h2>Portraits</h2>
+      <p class="section-desc">The quiet beauty in every face — authentic, personal, timeless.</p>
+    </div>
+    <div class="grid">
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/CU7A8804.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/JM2A1990.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/JM2A2468.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/JM2A3659.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/JM2A3686-Edit.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+      <div class="grid-item" onclick="openLightbox(this)">
+        <img src="images/thumbs/portraits/JM2A9265.jpg" alt="Portrait photo" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightbox-img" src="" alt="Enlarged photo">
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Messenger of Light Photography. All rights reserved.
+  </footer>
+
+  <script>
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      if (!img) return; // Don't open lightbox for placeholders
+      // Swap "/thumbs/" for "/full/" so the lightbox shows the full-size export
+      const fullSrc = img.src.replace('/images/thumbs/', '/images/full/');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = fullSrc;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

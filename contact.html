@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Messenger of Light Photography</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --text: #1a1a1a;
+      --text-light: #6b6b6b;
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f7;
+      --border: #e5e5e5;
+      --max-width: 1200px;
+      --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .nav-links { display: flex; gap: 2rem; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ===== Contact Section ===== */
+    .contact {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+    }
+
+    .contact h1 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact p {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      margin-bottom: 3rem;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .email-link {
+      display: inline-block;
+      font-size: 1.15rem;
+      letter-spacing: 0.03em;
+      padding: 0.9rem 2.5rem;
+      border: 1.5px solid var(--text);
+      border-radius: 3px;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .email-link:hover {
+      background: var(--text);
+      color: #fff;
+    }
+
+    /* ===== Divider ===== */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      margin: 3rem auto;
+    }
+
+    /* ===== Availability note ===== */
+    .availability {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .availability strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .contact { padding: 5rem 1.5rem 4rem; }
+      .contact h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="IMG_7148.jpg" alt="Logo">Messenger of Light</a>
+      <div class="nav-links">
+        <a href="index.html">Portfolio</a>
+        <a href="galleries.html">Galleries</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact Content -->
+  <section class="contact">
+    <h1>Get in Touch</h1>
+    <p>Interested in working together? Whether it's a portrait session, an event, or a creative collaboration, I'd love to hear from you.</p>
+
+    <a href="mailto:wpgabriel@gmail.com" class="email-link">wpgabriel@gmail.com</a>
+
+    <div class="divider"></div>
+
+    <p class="availability">
+      <strong>Currently booking</strong> for 2026 sessions.<br>
+      Based in the US — available for travel worldwide.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Messenger of Light Photography. All rights reserved.
+  </footer>
+
+</body>
+</html>

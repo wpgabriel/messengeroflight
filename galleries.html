@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galleries — Messenger of Light Photography</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --text: #1a1a1a;
+      --text-light: #6b6b6b;
+      --bg: #ffffff;
+      --bg-subtle: #f7f7f7;
+      --border: #e5e5e5;
+      --max-width: 1200px;
+      --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .nav-links { display: flex; gap: 2rem; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    /* ===== Page Header ===== */
+    .page-header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ===== Gallery Grid ===== */
+    .galleries {
+      flex: 1;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem 2rem 6rem;
+      width: 100%;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-card {
+      display: block;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    .gallery-cover {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--bg-subtle);
+    }
+
+    .gallery-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-card:hover .gallery-cover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-cover .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .gallery-cover .badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border-radius: 3px;
+      backdrop-filter: blur(4px);
+    }
+
+    .gallery-info {
+      padding: 1.1rem 1.25rem 1.25rem;
+    }
+
+    .gallery-info h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+    }
+
+    .gallery-info .gallery-date {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .gallery-info .gallery-meta {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .page-header { padding: 3.5rem 1.5rem 2rem; }
+      .page-header h1 { font-size: 1.8rem; }
+      .galleries { padding: 1rem 1.5rem 4rem; }
+      .gallery-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .nav-inner { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="IMG_7148.jpg" alt="Logo">Messenger of Light</a>
+      <div class="nav-links">
+        <a href="index.html">Portfolio</a>
+        <a href="galleries.html" class="active">Galleries</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Galleries</h1>
+    <p>Full event galleries hosted on Adobe Lightroom Cloud. Click any cover to view the complete set.</p>
+  </section>
+
+  <!--
+    HOW TO ADD A GALLERY:
+    1. Pick the photo you want as the cover (one of the images already in the gallery).
+    2. Export it from Lightroom and save it to:
+         images/galleries/<your-filename>.jpg
+       (Recommended size: ~1200px wide.)
+    3. Copy a <a class="gallery-card"> block below and update:
+         - href           → the Lightroom Cloud share URL
+         - <img src>      → path to your cover image
+         - <h3>           → gallery name
+         - .gallery-date  → date label
+  -->
+
+  <!-- Gallery List -->
+  <section class="galleries">
+    <div class="gallery-grid">
+
+      <a href="https://adobe.ly/49TENSA" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2026-01-27-wa-basketball.jpg" alt="WA Basketball v Chicago Christian">
+          <div class="placeholder">Cover image</div>
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Basketball v Chicago Christian</h3>
+          <div class="gallery-date">January 27, 2026</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/3MV9vle" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-12-17-wcgs-basketball.jpg" alt="2025-12-17 WCGS Basketball v St Petronille">
+          <div class="placeholder">Cover image</div>
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>2025-12-17 WCGS Basketball v St Petronille</h3>
+          <div class="gallery-date">January 27, 2026</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/48GdQRQ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-12-15-wcgs-basketball.jpg" alt="2025-12-15 WCGS Basketball v Naperville Christian Academy">
+          <div class="placeholder">Cover image</div>
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>2025-12-15 WCGS Basketball v Naperville Christian Academy</h3>
+          <div class="gallery-date">January 27, 2026</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <!-- Duplicate this block for additional galleries -->
+      <!--
+      <a href="#" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <div class="placeholder">Cover image</div>
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>Gallery Name</h3>
+          <div class="gallery-date">Date</div>
+          <div class="gallery-meta">Category</div>
+        </div>
+      </a>
+
+      <a href="#" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <div class="placeholder">Cover image</div>
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>Gallery Name</h3>
+          <div class="gallery-date">Date</div>
+          <div class="gallery-meta">Category</div>
+        </div>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Messenger of Light Photography. All rights reserved.
+  </footer>
+
+</body>
+</html>
