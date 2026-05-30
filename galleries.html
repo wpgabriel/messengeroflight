@@ -82,6 +82,30 @@
     .nav-links a:hover,
     .nav-links a.active { color: var(--text); }
 
+    /* ===== Hamburger Button ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ===== Page Header ===== */
     .page-header {
       max-width: var(--max-width);
@@ -210,12 +234,36 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
+      .hamburger { display: flex; }
+
+      .nav-inner {
+        padding: 1rem 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        margin-top: 1rem;
+      }
+
+      .nav-links.open { display: flex; }
+
+      .nav-links a {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid var(--bg-subtle);
+      }
+
+      .nav-links a:last-child { border-bottom: none; }
+
       .page-header { padding: 3.5rem 1.5rem 2rem; }
       .page-header h1 { font-size: 1.8rem; }
       .galleries { padding: 1rem 1.5rem 4rem; }
       .gallery-grid { grid-template-columns: 1fr; gap: 1.25rem; }
-      .nav-inner { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
     }
   </style>
 </head>
@@ -225,6 +273,9 @@
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="logo"><img src="IMG_7148.jpg" alt="Logo">Messenger of Light</a>
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-links">
         <a href="index.html">Portfolio</a>
         <a href="galleries.html" class="active">Galleries</a>
@@ -329,6 +380,13 @@
   <footer>
     &copy; 2026 Messenger of Light Photography. All rights reserved.
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.hamburger').classList.toggle('open');
+      document.querySelector('.nav-links').classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>
