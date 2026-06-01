@@ -128,12 +128,29 @@
       margin: 0 auto;
     }
 
+    /* ===== Section Headers ===== */
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-header p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
     /* ===== Gallery Grid ===== */
     .galleries {
-      flex: 1;
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 1rem 2rem 6rem;
+      padding: 1rem 2rem 4rem;
       width: 100%;
     }
 
@@ -303,75 +320,99 @@
          - .gallery-date  → date label
   -->
 
-  <!-- Gallery List -->
-  <section class="galleries">
+  <!-- Sports Galleries -->
+  <section class="galleries" id="sports-galleries">
+    <div class="section-header">
+      <h2>Sports</h2>
+    </div>
     <div class="gallery-grid">
 
       <a href="https://adobe.ly/49TENSA" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
           <img src="images/galleries/2026-01-27-wa-basketball.jpg" alt="WA Basketball v Chicago Christian">
-          <div class="placeholder">Cover image</div>
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>WA Basketball v Chicago Christian</h3>
           <div class="gallery-date">January 27, 2026</div>
-          <div class="gallery-meta">Sports</div>
         </div>
       </a>
 
       <a href="https://adobe.ly/3MV9vle" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2025-12-17-wcgs-basketball.jpg" alt="2025-12-17 WCGS Basketball v St Petronille">
-          <div class="placeholder">Cover image</div>
+          <img src="images/galleries/2025-12-17-wcgs-basketball.jpg" alt="WCGS Basketball v St Petronille">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
-          <h3>2025-12-17 WCGS Basketball v St Petronille</h3>
-          <div class="gallery-date">January 27, 2026</div>
-          <div class="gallery-meta">Sports</div>
+          <h3>WCGS Basketball v St Petronille</h3>
+          <div class="gallery-date">December 17, 2025</div>
         </div>
       </a>
 
       <a href="https://adobe.ly/48GdQRQ" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2025-12-15-wcgs-basketball.jpg" alt="2025-12-15 WCGS Basketball v Naperville Christian Academy">
-          <div class="placeholder">Cover image</div>
+          <img src="images/galleries/2025-12-15-wcgs-basketball.jpg" alt="WCGS Basketball v Naperville Christian Academy">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
-          <h3>2025-12-15 WCGS Basketball v Naperville Christian Academy</h3>
-          <div class="gallery-date">January 27, 2026</div>
-          <div class="gallery-meta">Sports</div>
+          <h3>WCGS Basketball v Naperville Christian Academy</h3>
+          <div class="gallery-date">December 15, 2025</div>
         </div>
       </a>
 
-      <!-- Duplicate this block for additional galleries -->
-      <!--
-      <a href="#" class="gallery-card" target="_blank" rel="noopener">
+      <a href="https://adobe.ly/3VXxSkw" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <div class="placeholder">Cover image</div>
+          <img src="images/galleries/2024-06-22-jiu-jitsu-seminar.jpg" alt="Grapple for Grades Jiu Jitsu Seminar">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
-          <h3>Gallery Name</h3>
-          <div class="gallery-date">Date</div>
-          <div class="gallery-meta">Category</div>
+          <h3>Grapple for Grades Jiu Jitsu Seminar</h3>
+          <div class="gallery-date">June 22, 2024</div>
         </div>
       </a>
 
-      <a href="#" class="gallery-card" target="_blank" rel="noopener">
+    </div>
+  </section>
+
+  <!-- Events Galleries -->
+  <section class="galleries" id="events-galleries">
+    <div class="section-header">
+      <h2>Events</h2>
+    </div>
+    <div class="gallery-grid">
+
+      <a href="https://adobe.ly/3FSpldc" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <div class="placeholder">Cover image</div>
+          <img src="images/galleries/2025-06-01-wa-graduation.jpg" alt="WA Graduation 2025">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
-          <h3>Gallery Name</h3>
-          <div class="gallery-date">Date</div>
-          <div class="gallery-meta">Category</div>
+          <h3>Whaton Academy 2025 Graduation</h3>
+          <div class="gallery-date">June 1, 2025</div>
         </div>
       </a>
-      -->
+
+      <a href="https://adobe.ly/3V3RYJf" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2024-05-17-wa-jazz-combo-night.jpg" alt="WA Jazz Combo Night">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Jazz Combo Night</h3>
+          <div class="gallery-date">May 17, 2024</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4b2jUCy" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2024-04-19-ilcs-gala.jpg" alt="ILCS Kick the Dust Up Gala">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>ILCS Kick the Dust Up Gala</h3>
+          <div class="gallery-date">April 19, 2024</div>
+        </div>
+      </a>
 
     </div>
   </section>

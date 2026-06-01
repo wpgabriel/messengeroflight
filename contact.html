@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Contact — Messenger of Light Photography</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,36 +106,63 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ===== Contact Section ===== */
-    .contact {
+    /* ===== About / Contact Layout ===== */
+    .about-contact {
       flex: 1;
-      max-width: 600px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 8rem 2rem 6rem;
-      text-align: center;
+      padding: 5rem 2rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
     }
 
-    .contact h1 {
-      font-size: 2.4rem;
+    .about-photo img {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .about-content h1 {
+      font-size: 2.2rem;
       font-weight: 300;
       letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
     }
 
-    .contact p {
+    .bio {
       font-size: 1.05rem;
       color: var(--text-light);
-      margin-bottom: 3rem;
-      max-width: 440px;
-      margin-left: auto;
-      margin-right: auto;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .bio p { margin-bottom: 1rem; }
+    .bio p:last-child { margin-bottom: 0; }
+
+    /* ===== Divider ===== */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+    }
+
+    .contact-info h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
     }
 
     .email-link {
       display: inline-block;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       letter-spacing: 0.03em;
-      padding: 0.9rem 2.5rem;
+      padding: 0.8rem 2rem;
       border: 1.5px solid var(--text);
       border-radius: 3px;
       transition: background 0.25s, color 0.25s;
@@ -145,18 +173,10 @@
       color: #fff;
     }
 
-    /* ===== Divider ===== */
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: var(--border);
-      margin: 3rem auto;
-    }
-
-    /* ===== Availability note ===== */
     .availability {
       font-size: 0.9rem;
       color: var(--text-light);
+      margin-top: 1.5rem;
     }
 
     .availability strong {
@@ -202,8 +222,15 @@
 
       .nav-links a:last-child { border-bottom: none; }
 
-      .contact { padding: 5rem 1.5rem 4rem; }
-      .contact h1 { font-size: 1.8rem; }
+      .about-contact {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.5rem 4rem;
+        gap: 2.5rem;
+      }
+
+      .about-photo { text-align: center; }
+
+      .about-content h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -224,19 +251,37 @@
     </div>
   </nav>
 
-  <!-- Contact Content -->
-  <section class="contact">
-    <h1>Get in Touch</h1>
-    <p>Interested in working together? Whether it's a portrait session, an event, or a creative collaboration, I'd love to hear from you.</p>
+  <!-- About & Contact Content -->
+  <section class="about-contact">
 
-    <a href="mailto:bill@messengeroflight.photo" class="email-link">bill@messengeroflight.photo</a>
+    <div class="about-photo">
+      <img src="images/contact/IMG_1254.jpeg" alt="Bill Gabriel — Photographer">
+    </div>
 
-    <div class="divider"></div>
+    <div class="about-content">
+      <h1>About Bill</h1>
 
-    <p class="availability">
-      <strong>Currently booking</strong> for 2026 sessions.<br>
-      Based in the US — available for travel worldwide.
-    </p>
+      <div class="bio">
+        <p>Bill Gabriel is a photographer based in the western suburbs of Chicago, specializing in sports, event, and portrait photography. With an eye for decisive moments and natural light, he brings energy and authenticity to every shoot.</p>
+
+        <p>Whether it's freezing the peak action of a basketball game, capturing the joy of a family celebration, or creating a timeless portrait, Bill's goal is always the same — to tell a story worth remembering.</p>
+
+        <p>When he's not behind the lens, you can find him coaching youth sports, exploring the outdoors, or testing out new camera gear he definitely didn't need.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <a href="mailto:bill@messengeroflight.photo" class="email-link">bill@messengeroflight.photo</a>
+
+        <p class="availability">
+          <strong>Currently booking</strong> for 2026 sessions.<br>
+          Based in the Chicago suburbs — available for travel.
+        </p>
+      </div>
+    </div>
+
   </section>
 
   <!-- Footer -->
