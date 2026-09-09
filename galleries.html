@@ -133,31 +133,7 @@
       margin: 0 auto;
     }
 
-    /* ===== Section Headers ===== */
-    .section-header {
-      margin-bottom: 1.5rem;
-    }
-
-    .section-header h2 {
-      font-size: 1.4rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-    }
-
-    .section-header p {
-      font-size: 0.95rem;
-      color: var(--text-light);
-    }
-
     /* ===== Gallery Grid ===== */
-    .galleries {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 1rem 2rem 4rem;
-      width: 100%;
-    }
 
     .gallery-grid {
       display: grid;
@@ -244,6 +220,107 @@
       margin-top: 0.5rem;
     }
 
+    /* ===== Year Navigation ===== */
+    .year-nav {
+      position: sticky;
+      top: 73px;                       /* sits directly beneath the main nav */
+      z-index: 90;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .year-nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .year-nav-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+
+    .year-nav-list {
+      list-style: none;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .year-nav-list::-webkit-scrollbar { display: none; }
+
+    .year-nav-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      white-space: nowrap;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .year-nav-list a:hover {
+      color: var(--text);
+      border-color: var(--text-light);
+    }
+
+    .year-nav-list a.active {
+      color: var(--bg);
+      background: var(--text);
+      border-color: var(--text);
+    }
+
+    .year-pill { font-size: 0.7rem; opacity: 0.6; }
+
+    /* ===== Year Sections ===== */
+    .year-section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 2rem 1rem;
+      width: 100%;
+      scroll-margin-top: 132px;        /* main nav + year nav */
+    }
+
+    .year-section:last-of-type { padding-bottom: 4rem; }
+
+    .year-banner {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      margin-bottom: 1.75rem;
+      background: var(--bg-subtle);
+      border-left: 4px solid var(--text);
+      border-radius: 6px;
+    }
+
+    .year-banner h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      line-height: 1;
+    }
+
+    .year-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
     /* ===== Footer ===== */
     footer {
       border-top: 1px solid var(--border);
@@ -284,8 +361,13 @@
 
       .page-header { padding: 3.5rem 1.5rem 2rem; }
       .page-header h1 { font-size: 1.8rem; }
-      .galleries { padding: 1rem 1.5rem 4rem; }
       .gallery-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+
+      .year-nav { top: 65px; }
+      .year-nav-inner { padding: 0.7rem 1.5rem; gap: 0.85rem; }
+      .year-section { padding: 2rem 1.5rem 1rem; scroll-margin-top: 118px; }
+      .year-banner { padding: 0.9rem 1.15rem; margin-bottom: 1.4rem; }
+      .year-banner h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -314,130 +396,358 @@
 
   <!--
     HOW TO ADD A GALLERY:
-    1. Pick the photo you want as the cover (one of the images already in the gallery).
+    1. Pick the photo you want as the cover (one of the images in the gallery).
     2. Export it from Lightroom and save it to:
-         images/galleries/<your-filename>.jpg
-       (Recommended size: ~1200px wide.)
-    3. Copy a <a class="gallery-card"> block below and update:
-         - href           → the Lightroom Cloud share URL
-         - <img src>      → path to your cover image
-         - <h3>           → gallery name
-         - .gallery-date  → date label
+         images/galleries/<yyyy-mm-dd>-<event>.jpg
+       Size it to ~1200px on the long edge (quality 94, metadata stripped) so the
+       page stays fast -- every cover on this page follows that convention.
+    3. Copy a <a class="gallery-card"> block into the matching year section below
+       and update: href (Lightroom share URL), <img src>, alt, <h3>, .gallery-date
+       and .gallery-meta (Sports or Events).
+    4. Galleries run newest-first within each year. If you start a new year, copy a
+       whole <section class="year-section"> block and add it to the .year-nav list
+       above so the jump links stay complete.
   -->
 
-  <!-- Sports Galleries -->
-  <section class="galleries" id="sports-galleries">
-    <div class="section-header">
-      <h2>Sports</h2>
+  <!-- Year Navigation -->
+  <nav class="year-nav" aria-label="Jump to year">
+    <div class="year-nav-inner">
+      <span class="year-nav-label">Jump to</span>
+      <ul class="year-nav-list">
+        <li><a href="#year-2026" data-year="2026">2026<span class="year-pill">3</span></a></li>
+        <li><a href="#year-2025" data-year="2025">2025<span class="year-pill">19</span></a></li>
+        <li><a href="#year-2024" data-year="2024">2024<span class="year-pill">3</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 2026 ===== -->
+  <section class="year-section" id="year-2026">
+    <div class="year-banner">
+      <h2>2026</h2>
+      <span class="year-meta">3 galleries</span>
     </div>
     <div class="gallery-grid">
-      
+
       <a href="https://adobe.ly/4xL4fDi" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2026-09-04-wa-football.jpg" alt="WA Football v Chicago Christian">
+          <img src="images/galleries/2026-09-04-wa-football.jpg" alt="WA Football v Chicago Christian" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>WA Football v Chicago Christian</h3>
           <div class="gallery-date">September 4, 2026</div>
+          <div class="gallery-meta">Sports</div>
         </div>
       </a>
-      
+
       <a href="https://adobe.ly/4xB2gl4" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2026-08-28-wa-football.jpg" alt="WA Football v LaSalle Peru">
+          <img src="images/galleries/2026-08-28-wa-football.jpg" alt="WA Football v LaSalle Peru" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>WA Football v LaSalle Peru</h3>
           <div class="gallery-date">August 28, 2026</div>
+          <div class="gallery-meta">Sports</div>
         </div>
       </a>
 
       <a href="https://adobe.ly/49TENSA" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2026-01-27-wa-basketball.jpg" alt="WA Basketball v Chicago Christian">
+          <img src="images/galleries/2026-01-27-wa-basketball.jpg" alt="WA Basketball v Chicago Christian" width="800" height="1200" loading="eager" fetchpriority="high" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>WA Basketball v Chicago Christian</h3>
           <div class="gallery-date">January 27, 2026</div>
-        </div>
-      </a>
-
-      <a href="https://adobe.ly/3MV9vle" class="gallery-card" target="_blank" rel="noopener">
-        <div class="gallery-cover">
-          <img src="images/galleries/2025-12-17-wcgs-basketball.jpg" alt="WCGS Basketball v St Petronille">
-          <span class="badge">Lightroom</span>
-        </div>
-        <div class="gallery-info">
-          <h3>WCGS Basketball v St Petronille</h3>
-          <div class="gallery-date">December 17, 2025</div>
-        </div>
-      </a>
-
-      <a href="https://adobe.ly/48GdQRQ" class="gallery-card" target="_blank" rel="noopener">
-        <div class="gallery-cover">
-          <img src="images/galleries/2025-12-15-wcgs-basketball.jpg" alt="WCGS Basketball v Naperville Christian Academy">
-          <span class="badge">Lightroom</span>
-        </div>
-        <div class="gallery-info">
-          <h3>WCGS Basketball v Naperville Christian Academy</h3>
-          <div class="gallery-date">December 15, 2025</div>
-        </div>
-      </a>
-
-      <a href="https://adobe.ly/3VXxSkw" class="gallery-card" target="_blank" rel="noopener">
-        <div class="gallery-cover">
-          <img src="images/galleries/2024-06-22-jiu-jitsu-seminar.jpg" alt="Grapple for Grades Jiu Jitsu Seminar">
-          <span class="badge">Lightroom</span>
-        </div>
-        <div class="gallery-info">
-          <h3>Grapple for Grades Jiu Jitsu Seminar</h3>
-          <div class="gallery-date">June 22, 2024</div>
+          <div class="gallery-meta">Sports</div>
         </div>
       </a>
 
     </div>
   </section>
 
-  <!-- Events Galleries -->
-  <section class="galleries" id="events-galleries">
-    <div class="section-header">
-      <h2>Events</h2>
+  <!-- ===== 2025 ===== -->
+  <section class="year-section" id="year-2025">
+    <div class="year-banner">
+      <h2>2025</h2>
+      <span class="year-meta">19 galleries</span>
     </div>
     <div class="gallery-grid">
 
+      <a href="https://adobe.ly/3MV9vle" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-12-17-wcgs-basketball.jpg" alt="WCGS Basketball v St Petronille" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WCGS Basketball v St Petronille</h3>
+          <div class="gallery-date">December 17, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/48GdQRQ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-12-15-wcgs-basketball.jpg" alt="WCGS Basketball v Naperville Christian Academy" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WCGS Basketball v Naperville Christian Academy</h3>
+          <div class="gallery-date">December 15, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4qyluEJ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-10-28-wa-soccer.jpg" alt="WA Soccer" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Soccer</h3>
+          <div class="gallery-date">October 28, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/3Jkncc8" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-10-25-wa-soccer.jpg" alt="WA Soccer" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Soccer</h3>
+          <div class="gallery-date">October 25, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/48O7259" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-10-24-wa-football.jpg" alt="WA Football v Christ the King" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Football v Christ the King</h3>
+          <div class="gallery-date">October 24, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4qpEbu4" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-10-22-wa-soccer.jpg" alt="WA Soccer v Woodstock" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Soccer v Woodstock</h3>
+          <div class="gallery-date">October 22, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/46F3LDF" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-10-03-wa-football.jpg" alt="WA Football — Homecoming" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Football — Homecoming</h3>
+          <div class="gallery-date">October 3, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4nWU5Kp" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-09-30-wa-tennis.jpg" alt="WA Tennis" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Tennis</h3>
+          <div class="gallery-date">September 30, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4pK1JcJ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-09-27-wa-xc.jpg" alt="WA Cross Country — Bartlett" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Cross Country — Bartlett</h3>
+          <div class="gallery-date">September 27, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4gxeseJ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-09-19-wa-football.jpg" alt="WA Football" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Football</h3>
+          <div class="gallery-date">September 19, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/47ONCN5" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-09-05-wa-football.jpg" alt="WA Football v GRC" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Football v GRC</h3>
+          <div class="gallery-date">September 5, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
       <a href="https://adobe.ly/3FSpldc" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2025-06-01-wa-graduation.jpg" alt="WA Graduation 2025">
+          <img src="images/galleries/2025-06-01-wa-graduation.jpg" alt="Wheaton Academy 2025 Graduation" width="1200" height="800" loading="lazy" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>Wheaton Academy 2025 Graduation</h3>
           <div class="gallery-date">June 1, 2025</div>
+          <div class="gallery-meta">Events</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4iPjjHQ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-05-01-wa-track.jpg" alt="WA Track — Wildcat" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Track — Wildcat</h3>
+          <div class="gallery-date">May 1, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/435zI6d" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-04-29-wa-track.jpg" alt="WA Track — Home" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Track — Home</h3>
+          <div class="gallery-date">April 29, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/42moPNe" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-04-15-wa-track.jpg" alt="WA Track — Home" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Track — Home</h3>
+          <div class="gallery-date">April 15, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/3RfuMoE" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-04-13-wa-track.jpg" alt="WA Track — Westmont" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Track — Westmont</h3>
+          <div class="gallery-date">April 13, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/3EvPTzW" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-02-07-wa-basketball.jpg" alt="WA Basketball v Timothy" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Basketball v Timothy</h3>
+          <div class="gallery-date">February 7, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/40YeypJ" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-01-31-wa-basketball.jpg" alt="WA Basketball v St. Edward" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Basketball v St. Edward</h3>
+          <div class="gallery-date">January 31, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+      <a href="https://adobe.ly/4gkbWXK" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2025-01-21-wa-basketball.jpg" alt="WA Basketball v Bishop" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>WA Basketball v Bishop</h3>
+          <div class="gallery-date">January 21, 2025</div>
+          <div class="gallery-meta">Sports</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ===== 2024 ===== -->
+  <section class="year-section" id="year-2024">
+    <div class="year-banner">
+      <h2>2024</h2>
+      <span class="year-meta">3 galleries</span>
+    </div>
+    <div class="gallery-grid">
+
+      <a href="https://adobe.ly/3VXxSkw" class="gallery-card" target="_blank" rel="noopener">
+        <div class="gallery-cover">
+          <img src="images/galleries/2024-06-22-jiu-jitsu-seminar.jpg" alt="Grapple for Grades Jiu Jitsu Seminar" width="1200" height="800" loading="lazy" decoding="async">
+          <span class="badge">Lightroom</span>
+        </div>
+        <div class="gallery-info">
+          <h3>Grapple for Grades Jiu Jitsu Seminar</h3>
+          <div class="gallery-date">June 22, 2024</div>
+          <div class="gallery-meta">Sports</div>
         </div>
       </a>
 
       <a href="https://adobe.ly/3V3RYJf" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2024-05-17-wa-jazz-combo-night.jpg" alt="WA Jazz Combo Night">
+          <img src="images/galleries/2024-05-17-wa-jazz-combo-night.jpg" alt="WA Jazz Combo Night" width="1200" height="800" loading="lazy" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>WA Jazz Combo Night</h3>
           <div class="gallery-date">May 17, 2024</div>
+          <div class="gallery-meta">Events</div>
         </div>
       </a>
 
       <a href="https://adobe.ly/4b2jUCy" class="gallery-card" target="_blank" rel="noopener">
         <div class="gallery-cover">
-          <img src="images/galleries/2024-04-19-ilcs-gala.jpg" alt="ILCS Kick the Dust Up Gala">
+          <img src="images/galleries/2024-04-19-ilcs-gala.jpg" alt="ILCS Kick the Dust Up Gala" width="1200" height="800" loading="lazy" decoding="async">
           <span class="badge">Lightroom</span>
         </div>
         <div class="gallery-info">
           <h3>ILCS Kick the Dust Up Gala</h3>
           <div class="gallery-date">April 19, 2024</div>
+          <div class="gallery-meta">Events</div>
         </div>
       </a>
 
@@ -454,6 +764,46 @@
       document.querySelector('.hamburger').classList.toggle('open');
       document.querySelector('.nav-links').classList.toggle('open');
     }
+
+    // Highlight the year currently in view in the jump nav.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.year-nav-list a'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.year-section'));
+      if (!links.length || !sections.length) return;
+
+      var mainNav = document.querySelector('nav:not(.year-nav)');
+      var yearNav = document.querySelector('.year-nav');
+
+      function update() {
+        var stack = mainNav.getBoundingClientRect().height +
+                    yearNav.getBoundingClientRect().height;
+        // the active year is the last section whose top has passed under the sticky bars
+        var current = sections[0];
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].getBoundingClientRect().top <= stack + 8) current = sections[i];
+        }
+        // at the very bottom, always credit the final section
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+          current = sections[sections.length - 1];
+        }
+        var year = current.id.replace('year-', '');
+        links.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('data-year') === year);
+        });
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        setTimeout(function () { ticking = false; update(); }, 80);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
+    })();
+
   </script>
 
 </body>
